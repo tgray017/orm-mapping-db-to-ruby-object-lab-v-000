@@ -93,13 +93,12 @@ class Student
     DB[:conn].execute(sql).collect {|row| self.new_from_db(row)}.first
   end
   
-  def self.first_student_in_grade_10
+  def self.all_students_in_grade_X(grade)
     sql = <<-SQL
       SELECT *
       FROM students
-      WHERE grade = 10
-      LIMIT 1
+      WHERE grade = ?
     SQL
-    DB[:conn].execute(sql).collect {|row| self.new_from_db(row)}.first
+    DB[:conn].execute(sql, grade).collect {|row| self.new_from_db(row)}
   end      
 end
